@@ -330,10 +330,16 @@ function showNextCard(){
 }
 
 function flipCard(){
-  if(isFlipped) return;
-  isFlipped=true;
-  document.getElementById('card').classList.add('flipped');
-  setTimeout(()=>{document.getElementById('rating-row').style.display='grid';},260);
+  isFlipped=!isFlipped;
+  const card=document.getElementById('card');
+  const rating=document.getElementById('rating-row');
+  if(isFlipped){
+    card.classList.add('flipped');
+    setTimeout(()=>{rating.style.display='grid';},260);
+  } else {
+    card.classList.remove('flipped');
+    rating.style.display='none';
+  }
 }
 
 function rate(d){
