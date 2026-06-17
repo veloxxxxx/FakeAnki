@@ -1,109 +1,224 @@
-
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Akademie Deutsch · Karteikarten</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:var(--font-sans)}
-#app{min-height:500px;padding:1rem;max-width:420px;margin:0 auto}
-.screen{display:none}
-.screen.active{display:flex;flex-direction:column}
-#menu-screen{align-items:center;justify-content:center;min-height:480px;gap:1.5rem;text-align:center}
-.app-title{font-size:22px;font-weight:500;color:var(--color-text-primary)}
-.app-sub{font-size:14px;color:var(--color-text-secondary);line-height:1.5;max-width:280px}
-.deck-info{font-size:13px;color:var(--color-text-secondary);background:var(--color-background-secondary);padding:8px 16px;border-radius:var(--border-radius-md)}
-.btn-primary{background:var(--color-text-primary);color:var(--color-background-primary);border:none;border-radius:var(--border-radius-lg);padding:14px 40px;font-size:16px;font-weight:500;cursor:pointer;width:100%;max-width:280px}
-.btn-primary:active{opacity:0.85;transform:scale(0.98)}
-#card-screen{min-height:500px;gap:0}
-.progress-bar{width:100%;height:3px;background:var(--color-background-secondary);border-radius:2px;margin-bottom:1rem}
-.progress-fill{height:3px;background:var(--color-text-primary);border-radius:2px;transition:width 0.3s}
-.theme-label{font-size:11px;font-weight:500;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px}
-.card-container{flex:1;perspective:1000px;cursor:pointer;min-height:320px;position:relative;margin-bottom:1rem}
-.card{width:100%;height:100%;min-height:320px;position:relative;transform-style:preserve-3d;transition:transform 0.45s cubic-bezier(.4,0,.2,1)}
-.card.flipped{transform:rotateY(180deg)}
-.card-face{position:absolute;width:100%;min-height:320px;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:var(--border-radius-lg);border:0.5px solid var(--color-border-tertiary);background:var(--color-background-primary);padding:1.25rem;display:flex;flex-direction:column}
-.card-back{transform:rotateY(180deg);background:var(--color-background-secondary)}
-.card-type{font-size:11px;font-weight:500;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.75rem}
-.card-question{font-size:18px;font-weight:500;color:var(--color-text-primary);line-height:1.4;flex:1;display:flex;align-items:center}
-.tap-hint{font-size:12px;color:var(--color-text-secondary);margin-top:auto;text-align:center;padding-top:0.75rem;border-top:0.5px solid var(--color-border-tertiary)}
-.answer-label{font-size:11px;font-weight:500;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px}
-.example-answer{font-size:15px;color:var(--color-text-primary);line-height:1.5;margin-bottom:1rem;padding-bottom:1rem;border-bottom:0.5px solid var(--color-border-tertiary)}
-.vocab-label{font-size:11px;font-weight:500;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px}
-.vocab-list{display:flex;flex-direction:column;gap:6px}
-.vocab-item{font-size:13px;color:var(--color-text-primary);line-height:1.4}
-.vocab-de{font-weight:500}
-.vocab-en{color:var(--color-text-secondary)}
-.rating-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.rating-btn{border:0.5px solid var(--color-border-secondary);background:var(--color-background-primary);border-radius:var(--border-radius-md);padding:12px 4px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px}
-.rating-btn:active{transform:scale(0.96)}
-.rating-icon{font-size:18px}
-.rating-label{font-size:12px;font-weight:500;color:var(--color-text-primary)}
-.rating-sub{font-size:10px;color:var(--color-text-secondary)}
-.rating-easy .rating-icon{color:#3B6D11}
-.rating-medium .rating-icon{color:#BA7517}
-.rating-hard .rating-icon{color:#A32D2D}
-.counter-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:0.5rem}
-.counter-text{font-size:13px;color:var(--color-text-secondary)}
-#done-screen{align-items:center;justify-content:center;min-height:480px;gap:1rem;text-align:center}
-.done-icon{font-size:48px;color:var(--color-text-primary)}
-.done-title{font-size:22px;font-weight:500;color:var(--color-text-primary)}
-.done-sub{font-size:14px;color:var(--color-text-secondary);max-width:260px;line-height:1.5}
-</style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap');
 
+:root{
+  --bg: #fbf8f9;
+  --surface: #ffffff;
+  --surface-2: #f6eef1;
+  --ink: #2a2330;
+  --ink-soft: #6c6470;
+  --ink-faint: #9a909c;
+  --border: rgba(42,35,48,0.10);
+  --border-2: rgba(42,35,48,0.18);
+  --pink: #d65a8a;
+  --pink-soft: #fbe9f0;
+  --pink-ink: #8c2f54;
+  --turq: #2ba89a;
+  --turq-soft: #e1f4f1;
+  --turq-ink: #1a6b61;
+  --amber-ink: #9a6310;
+  --amber-soft: #faf0db;
+  --radius: 14px;
+  --radius-sm: 9px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{
+  font-family:'Inter',system-ui,sans-serif;
+  background:
+    radial-gradient(120% 80% at 0% 0%, var(--pink-soft) 0%, transparent 45%),
+    radial-gradient(120% 80% at 100% 100%, var(--turq-soft) 0%, transparent 45%),
+    var(--bg);
+  background-attachment:fixed;
+  color:var(--ink);
+  min-height:100dvh;
+  display:flex;
+  justify-content:center;
+}
+#app{width:100%;max-width:440px;padding:1.25rem;display:flex;flex-direction:column;min-height:100dvh}
+
+.screen{display:none;flex:1;flex-direction:column}
+.screen.active{display:flex;animation:fade .35s ease}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* ---- menu ---- */
+#menu-screen{align-items:center;justify-content:center;gap:1.5rem;text-align:center}
+.brand-mark{
+  width:64px;height:64px;border-radius:20px;
+  background:linear-gradient(135deg,var(--pink) 0%, var(--turq) 100%);
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;font-family:'Fraunces',serif;font-size:30px;font-weight:600;
+  box-shadow:0 8px 24px rgba(214,90,138,0.25);
+}
+.app-title{font-family:'Fraunces',serif;font-size:30px;font-weight:600;line-height:1.1;letter-spacing:-0.01em}
+.app-sub{font-size:14.5px;color:var(--ink-soft);line-height:1.55;max-width:290px}
+.deck-chip{
+  font-size:12.5px;color:var(--turq-ink);background:var(--turq-soft);
+  padding:7px 16px;border-radius:999px;font-weight:500;letter-spacing:.01em;
+}
+.btn-primary{
+  background:linear-gradient(135deg,var(--pink) 0%, #c44e7d 100%);
+  color:#fff;border:none;border-radius:var(--radius);
+  padding:15px 40px;font-family:'Inter',sans-serif;font-size:16px;font-weight:600;
+  cursor:pointer;width:100%;max-width:300px;letter-spacing:.01em;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  box-shadow:0 6px 18px rgba(214,90,138,0.28);transition:transform .12s,box-shadow .12s;
+}
+.btn-primary:active{transform:scale(.97);box-shadow:0 3px 10px rgba(214,90,138,0.25)}
+.btn-ghost{
+  background:transparent;color:var(--turq-ink);border:1.5px solid var(--turq);
+  border-radius:var(--radius);padding:13px 36px;font-size:15px;font-weight:600;
+  cursor:pointer;width:100%;max-width:300px;transition:background .15s;
+}
+.btn-ghost:active{background:var(--turq-soft)}
+
+/* ---- card screen ---- */
+#card-screen{gap:0}
+.topbar{display:flex;align-items:center;gap:12px;margin-bottom:1rem}
+.progress-track{flex:1;height:6px;background:var(--surface-2);border-radius:999px;overflow:hidden}
+.progress-fill{height:100%;width:0%;border-radius:999px;
+  background:linear-gradient(90deg,var(--pink),var(--turq));transition:width .35s ease}
+.queue-pill{font-size:12px;font-weight:600;color:var(--ink-soft);white-space:nowrap}
+
+.theme-label{
+  font-size:11.5px;font-weight:600;color:var(--pink);
+  text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px;padding-left:2px;
+}
+
+.card-container{flex:1;perspective:1400px;cursor:pointer;min-height:340px;margin-bottom:1.1rem}
+.card{width:100%;height:100%;min-height:340px;position:relative;
+  transform-style:preserve-3d;transition:transform .5s cubic-bezier(.4,0,.2,1)}
+.card.flipped{transform:rotateY(180deg)}
+.card-face{
+  position:absolute;inset:0;min-height:340px;backface-visibility:hidden;
+  -webkit-backface-visibility:hidden;border-radius:var(--radius);
+  background:var(--surface);border:1px solid var(--border);
+  padding:1.4rem;display:flex;flex-direction:column;
+  box-shadow:0 4px 20px rgba(42,35,48,0.05);overflow-y:auto;
+}
+.card-front{border-top:4px solid var(--pink)}
+.card-back{transform:rotateY(180deg);border-top:4px solid var(--turq);background:var(--surface)}
+
+.type-badge{
+  display:inline-flex;align-self:flex-start;font-size:11px;font-weight:600;
+  text-transform:uppercase;letter-spacing:.08em;padding:4px 11px;border-radius:999px;margin-bottom:1rem;
+}
+.type-question{background:var(--pink-soft);color:var(--pink-ink)}
+.type-topic{background:var(--amber-soft);color:var(--amber-ink)}
+
+.card-question{
+  font-family:'Fraunces',serif;font-size:23px;font-weight:500;line-height:1.32;
+  color:var(--ink);flex:1;display:flex;align-items:center;letter-spacing:-0.01em;
+}
+.tap-hint{
+  font-size:12.5px;color:var(--ink-faint);margin-top:auto;text-align:center;
+  padding-top:1rem;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:center;gap:6px;
+}
+
+.sec-label{font-size:11px;font-weight:600;color:var(--turq);text-transform:uppercase;letter-spacing:.09em;margin-bottom:9px}
+.example-answer{
+  font-size:15.5px;color:var(--ink);line-height:1.6;margin-bottom:1.3rem;
+  padding-bottom:1.3rem;border-bottom:1px solid var(--border);
+}
+.vocab-list{display:flex;flex-direction:column;gap:9px}
+.vocab-item{font-size:14px;line-height:1.4;display:flex;gap:7px;flex-wrap:wrap}
+.vocab-de{font-weight:600;color:var(--pink-ink)}
+.vocab-en{color:var(--ink-soft)}
+
+.rating-row{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
+.rating-btn{
+  border:1px solid var(--border-2);background:var(--surface);border-radius:var(--radius-sm);
+  padding:13px 4px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:5px;
+  transition:transform .1s,border-color .15s,background .15s;
+}
+.rating-btn:active{transform:scale(.95)}
+.rating-icon{font-size:21px;line-height:1}
+.rating-name{font-size:13px;font-weight:600;color:var(--ink)}
+.rating-sub{font-size:10px;color:var(--ink-faint)}
+.rating-hard{}
+.rating-hard:active{border-color:var(--pink);background:var(--pink-soft)}
+.rating-medium:active{border-color:var(--amber-ink);background:var(--amber-soft)}
+.rating-easy:active{border-color:var(--turq);background:var(--turq-soft)}
+
+/* ---- done ---- */
+#done-screen{align-items:center;justify-content:center;gap:1rem;text-align:center}
+.done-mark{
+  width:72px;height:72px;border-radius:50%;
+  background:linear-gradient(135deg,var(--turq) 0%, var(--pink) 100%);
+  display:flex;align-items:center;justify-content:center;color:#fff;font-size:34px;
+  box-shadow:0 8px 24px rgba(43,168,154,0.25);
+}
+.done-title{font-family:'Fraunces',serif;font-size:27px;font-weight:600}
+.done-sub{font-size:14.5px;color:var(--ink-soft);max-width:280px;line-height:1.55}
+</style>
+</head>
+<body>
 <div id="app">
+
   <div id="menu-screen" class="screen active">
+    <div class="brand-mark">AD</div>
     <div>
-      <p class="app-title">Akademie Deutsch</p>
-      <p class="app-sub" style="margin-top:6px">Spaced repetition flashcards for your oral exam topics.</p>
+      <h1 class="app-title">Akademie&nbsp;Deutsch</h1>
+      <p class="app-sub" style="margin-top:8px">Karteikarten mit Spaced&nbsp;Repetition für deine mündliche Prüfung.</p>
     </div>
-    <div class="deck-info" id="deck-count">Loading cards...</div>
-    <button class="btn-primary" onclick="startDeck()"><i class="ti ti-player-play" aria-hidden="true"></i> Start</button>
+    <div class="deck-chip" id="deck-chip">Karten werden geladen…</div>
+    <button class="btn-primary" onclick="startDeck()">▶ &nbsp;Start</button>
   </div>
 
   <div id="card-screen" class="screen">
-    <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
-    <div class="counter-row">
-      <span class="counter-text" id="counter-text">1 / 0</span>
-      <span class="counter-text" id="queue-text"></span>
+    <div class="topbar">
+      <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+      <span class="queue-pill" id="queue-pill"></span>
     </div>
     <div class="theme-label" id="theme-label"></div>
     <div class="card-container" id="card-container" onclick="flipCard()">
       <div class="card" id="card">
         <div class="card-face card-front">
-          <div class="card-type" id="card-type"></div>
+          <span class="type-badge" id="type-badge"></span>
           <div class="card-question" id="card-question"></div>
-          <div class="tap-hint"><i class="ti ti-hand-finger" aria-hidden="true"></i> tap to reveal</div>
+          <div class="tap-hint">👆 tippen zum Umdrehen</div>
         </div>
         <div class="card-face card-back">
-          <div class="answer-label">Example answer</div>
+          <div class="sec-label">Beispielantwort</div>
           <div class="example-answer" id="card-answer"></div>
-          <div class="vocab-label">Key vocabulary</div>
+          <div class="sec-label">Wichtige Wörter</div>
           <div class="vocab-list" id="card-vocab"></div>
         </div>
       </div>
     </div>
     <div class="rating-row" id="rating-row" style="display:none">
       <button class="rating-btn rating-hard" onclick="rate('hard')">
-        <span class="rating-icon"><i class="ti ti-flame" aria-hidden="true"></i></span>
-        <span class="rating-label">Hard</span>
-        <span class="rating-sub">in 3 cards</span>
+        <span class="rating-icon">🔥</span>
+        <span class="rating-name">Schwer</span>
+        <span class="rating-sub">in 3 Karten</span>
       </button>
       <button class="rating-btn rating-medium" onclick="rate('medium')">
-        <span class="rating-icon"><i class="ti ti-minus" aria-hidden="true"></i></span>
-        <span class="rating-label">Medium</span>
-        <span class="rating-sub">in 10 cards</span>
+        <span class="rating-icon">〜</span>
+        <span class="rating-name">Mittel</span>
+        <span class="rating-sub">in 10 Karten</span>
       </button>
       <button class="rating-btn rating-easy" onclick="rate('easy')">
-        <span class="rating-icon"><i class="ti ti-check" aria-hidden="true"></i></span>
-        <span class="rating-label">Easy</span>
-        <span class="rating-sub">at the end</span>
+        <span class="rating-icon">✓</span>
+        <span class="rating-name">Leicht</span>
+        <span class="rating-sub">am Ende</span>
       </button>
     </div>
   </div>
 
   <div id="done-screen" class="screen">
-    <i class="ti ti-confetti done-icon" aria-hidden="true"></i>
-    <p class="done-title">Deck complete!</p>
+    <div class="done-mark">✓</div>
+    <h2 class="done-title">Stapel geschafft!</h2>
     <p class="done-sub" id="done-sub"></p>
-    <button class="btn-primary" onclick="restartDeck()" style="margin-top:0.5rem">Start again</button>
+    <button class="btn-ghost" onclick="restartDeck()">Nochmal starten</button>
   </div>
+
 </div>
 
 <script>
@@ -114,19 +229,19 @@ const CARDS = [
   {theme:"Studium & Studentenleben",type:"topic",q:"Studieren im Ausland: Herausforderungen und Chancen",a:"Ein Auslandssemester ist eine tolle Chance, neue Kulturen kennenzulernen und die eigene Sprache zu verbessern. Die größte Herausforderung ist die Anerkennung der Studienleistungen.",vocab:[["die Anerkennung","recognition/accreditation"],["die Studienleistung","academic credit"],["die Herausforderung","challenge"],["die Sprachkenntnisse","language skills"],["das Auslandssemester","semester abroad"]]},
   {theme:"Studium & Studentenleben",type:"topic",q:"Studieren und Arbeiten: Vorteile und Nachteile",a:"Viele Studierende jobben nebenbei, um sich das Studium leisten zu können. Das kostet zwar Zeit und Energie, aber man gewinnt wichtige Berufserfahrung.",vocab:[["nebenbei","on the side"],["sich etwas leisten können","to be able to afford something"],["die Berufserfahrung","work experience"],["der Zeitmangel","lack of time"],["vereinbaren","to combine/balance"]]},
   {theme:"Studium & Studentenleben",type:"topic",q:"Lernen: Lernorte, Lernstrategien, Lerngewohnheiten, Motivation",a:"Ich lerne am liebsten in der Bibliothek, weil es dort ruhig ist und ich mich besser konzentrieren kann. Meine Strategie ist es, Zusammenfassungen zu schreiben und Karteikarten zu benutzen.",vocab:[["die Zusammenfassung","summary"],["die Karteikarte","flashcard"],["sich konzentrieren","to concentrate"],["die Lernstrategie","learning strategy"],["die Motivation","motivation"]]},
-  {theme:"Arbeit & Beruf",type:"question",q:"Was sind Ihre Kriterien für die Studienwahl?",a:"Für mich sind ein gutes Gehalt und interessante Inhalte am wichtigsten. Außerdem möchte ich einen Beruf, der mir Sicherheit und gleichzeitig Abwechslung bietet.",vocab:[["das Kriterium (pl. Kriterien)","criterion / criteria"],["das Gehalt","salary"],["die Arbeitsplatzsicherheit","job security"],["die Abwechslung","variety"],["die Möglichkeit zur Weiterentwicklung","opportunity for development"]]},
-  {theme:"Arbeit & Beruf",type:"question",q:"Was ist Ihnen bei der Berufswahl wichtig?",a:"Mir ist es wichtig, dass mein Beruf sinnvoll ist und ich etwas zur Gesellschaft beitragen kann. Natürlich spielt auch das Gehalt eine Rolle.",vocab:[["sinnvoll","meaningful"],["zur Gesellschaft beitragen","to contribute to society"],["das Work-Life-Balance","work-life balance"],["das Arbeitsklima","working atmosphere"],["die Aufstiegschancen","chances of promotion"]]},
+  {theme:"Arbeit & Beruf",type:"question",q:"Was sind Ihre Kriterien für die Studienwahl?",a:"Für mich sind ein gutes Gehalt und interessante Inhalte am wichtigsten. Außerdem möchte ich einen Beruf, der mir Sicherheit und gleichzeitig Abwechslung bietet.",vocab:[["das Kriterium (pl. Kriterien)","criterion / criteria"],["das Gehalt","salary"],["die Arbeitsplatzsicherheit","job security"],["die Abwechslung","variety"],["die Weiterentwicklung","further development"]]},
+  {theme:"Arbeit & Beruf",type:"question",q:"Was ist Ihnen bei der Berufswahl wichtig?",a:"Mir ist es wichtig, dass mein Beruf sinnvoll ist und ich etwas zur Gesellschaft beitragen kann. Natürlich spielt auch das Gehalt eine Rolle.",vocab:[["sinnvoll","meaningful"],["zur Gesellschaft beitragen","to contribute to society"],["die Work-Life-Balance","work-life balance"],["das Arbeitsklima","working atmosphere"],["die Aufstiegschancen","chances of promotion"]]},
   {theme:"Arbeit & Beruf",type:"question",q:"Welche Erfahrungen haben Sie mit Nebenjobs oder Studentenjobs gemacht?",a:"Ich habe als Kellner gearbeitet und dabei gelernt, unter Druck gut zu funktionieren. Es war anstrengend, aber ich konnte das verdiente Geld direkt ins Studium investieren.",vocab:[["der Nebenjob","part-time job"],["unter Druck","under pressure"],["anstrengend","exhausting/demanding"],["das verdiente Geld","earned money"],["Erfahrungen sammeln","to gain experience"]]},
   {theme:"Arbeit & Beruf",type:"question",q:"Was ist Ihr Traumberuf?",a:"Mein Traumberuf ist Architekt, weil ich kreativ arbeiten und gleichzeitig etwas Bleibendes schaffen möchte, das Menschen im Alltag hilft.",vocab:[["der Traumberuf","dream job"],["kreativ","creative"],["etwas schaffen","to create something"],["der Alltag","everyday life"],["die Leidenschaft","passion"]]},
   {theme:"Vergleich Wien / Heimatstadt",type:"question",q:"Wie ist das Freizeitangebot in Wien im Vergleich zu Ihrer Heimatstadt?",a:"Wien bietet unglaublich viel: Museen, Konzerte, Parks und Nachtleben. In meiner Heimatstadt ist das Angebot kleiner, aber dafür persönlicher und günstiger.",vocab:[["das Freizeitangebot","leisure offerings"],["unglaublich","incredibly"],["das Nachtleben","nightlife"],["im Vergleich zu","in comparison to"],["günstig","affordable"]]},
   {theme:"Vergleich Wien / Heimatstadt",type:"question",q:"Wie ist die Wohnsituation in Wien im Vergleich zu Ihrer Heimatstadt?",a:"In Wien sind die Mieten sehr hoch, besonders für Studierende. In meiner Heimatstadt ist Wohnen viel günstiger, aber die Auswahl an WGs ist kleiner.",vocab:[["die Miete","rent"],["der Wohnungsmarkt","housing market"],["die WG (Wohngemeinschaft)","shared flat"],["leistbar","affordable"],["die Wohnfläche","living space"]]},
   {theme:"Vergleich Wien / Heimatstadt",type:"question",q:"Wie ist die Verkehrssituation in Wien im Vergleich zu Ihrer Heimatstadt?",a:"Wien hat ein ausgezeichnetes öffentliches Verkehrsnetz mit U-Bahn, Tram und Bus. In meiner Heimatstadt ist man ohne Auto kaum mobil.",vocab:[["das Verkehrsnetz","transport network"],["öffentliche Verkehrsmittel","public transport"],["die U-Bahn","subway"],["die Strecke","route"],["der Stau","traffic jam"]]},
-  {theme:"Vergleich Wien / Heimatstadt",type:"question",q:"Was gefällt Ihnen in Wien? Was gefällt Ihnen nicht?",a:"Wien gefällt mir wegen seiner historischen Architektur und der lebendigen Kulturszene. Was mich manchmal stört, ist das Wetter im Winter – es ist kalt und grau.",vocab:[["die Architektur","architecture"],["lebendig","vibrant/lively"],["die Kulturszene","cultural scene"],["stören","to bother"],["gewöhnen an","to get used to"]]},
+  {theme:"Vergleich Wien / Heimatstadt",type:"question",q:"Was gefällt Ihnen in Wien? Was gefällt Ihnen nicht?",a:"Wien gefällt mir wegen seiner historischen Architektur und der lebendigen Kulturszene. Was mich manchmal stört, ist das Wetter im Winter – es ist kalt und grau.",vocab:[["die Architektur","architecture"],["lebendig","vibrant/lively"],["die Kulturszene","cultural scene"],["stören","to bother"],["sich gewöhnen an","to get used to"]]},
   {theme:"Film & Serien",type:"question",q:"Welche Filmgenres mögen Sie?",a:"Ich schaue am liebsten Thriller und Dokumentarfilme, weil sie mich zum Nachdenken bringen. Komödien schaue ich, wenn ich mich einfach entspannen will.",vocab:[["das Genre","genre"],["der Thriller","thriller"],["der Dokumentarfilm","documentary"],["die Komödie","comedy"],["zum Nachdenken bringen","to make one think"]]},
   {theme:"Film & Serien",type:"question",q:"Kino, Streaming oder Netflix – was bevorzugen Sie?",a:"Ich bevorzuge Streaming, weil ich selbst entscheiden kann, wann und was ich schaue. Das Kino ist aber für besondere Filme mit gutem Ton und Bild unverzichtbar.",vocab:[["bevorzugen","to prefer"],["unverzichtbar","indispensable"],["die Auflösung","resolution"],["flexibel","flexible"],["das Abonnement","subscription"]]},
   {theme:"Film & Serien",type:"question",q:"Erzählen Sie von Ihrem Lieblingsfilm.",a:"Mein Lieblingsfilm ist Inception. Es geht um einen Mann, der in die Träume anderer eindringt, um Informationen zu stehlen. Der Film ist komplex aber fesselnd.",vocab:[["fesselnd","captivating"],["der Regisseur","director"],["der Hauptdarsteller","lead actor"],["der Inhalt","plot/content"],["die Handlung","storyline"]]},
-  {theme:"Wetter & Klima",type:"question",q:"Wie ist das Wetter heute?",a:"Heute ist es bewölkt und kühl, typisch für Wien im Frühling. Es könnte später noch regnen, daher habe ich meinen Schirm dabei.",vocab:[["bewölkt","cloudy"],["die Temperatur","temperature"],["der Schirm","umbrella"],["der Wettervorhersage","weather forecast"],["schwül","humid"]]},
-  {theme:"Wetter & Klima",type:"question",q:"Wie ist das Klima in Ihrem Land?",a:"In meiner Heimat gibt es vier deutliche Jahreszeiten. Die Sommer sind heiß und trocken, die Winter kalt und schneereich.",vocab:[["die Jahreszeit","season"],["das Klima","climate"],["trocken","dry"],["schneereiche Winter","snowy winters"],["der Monsun","monsoon"]]},
+  {theme:"Wetter & Klima",type:"question",q:"Wie ist das Wetter heute?",a:"Heute ist es bewölkt und kühl, typisch für Wien im Frühling. Es könnte später noch regnen, daher habe ich meinen Schirm dabei.",vocab:[["bewölkt","cloudy"],["die Temperatur","temperature"],["der Schirm","umbrella"],["die Wettervorhersage","weather forecast"],["schwül","humid"]]},
+  {theme:"Wetter & Klima",type:"question",q:"Wie ist das Klima in Ihrem Land?",a:"In meiner Heimat gibt es vier deutliche Jahreszeiten. Die Sommer sind heiß und trocken, die Winter kalt und schneereich.",vocab:[["die Jahreszeit","season"],["das Klima","climate"],["trocken","dry"],["schneereich","snowy"],["der Monsun","monsoon"]]},
   {theme:"Wetter & Klima",type:"question",q:"Welches Wetter mögen Sie? Warum?",a:"Ich mag warmes, sonniges Wetter, weil ich dann draußen sein und Sport treiben kann. Regen macht mich eher müde und antriebslos.",vocab:[["sonnig","sunny"],["draußen","outdoors"],["antriebslos","unmotivated"],["angenehm","pleasant"],["der Sonnenschein","sunshine"]]},
   {theme:"Wetter & Klima",type:"topic",q:"Klimavergleich Österreich / Heimatland",a:"Österreich hat ein gemäßigtes Klima mit kalten Wintern und warmen Sommern. Im Vergleich zu meiner Heimat ist es hier feuchter und bewölkter.",vocab:[["gemäßigt","temperate"],["feucht","humid/damp"],["der Unterschied","difference"],["die Niederschläge","precipitation"],["der Klimawandel","climate change"]]},
   {theme:"Online-Shopping",type:"topic",q:"Vorteile von Online-Shopping",a:"Online-Shopping spart Zeit und ist bequem, weil man rund um die Uhr einkaufen kann. Außerdem ist die Auswahl oft viel größer als im stationären Handel.",vocab:[["bequem","convenient"],["rund um die Uhr","around the clock"],["die Auswahl","selection"],["der Preisvergleich","price comparison"],["liefern","to deliver"]]},
@@ -134,10 +249,10 @@ const CARDS = [
   {theme:"Online-Shopping",type:"topic",q:"Nachteile und Gefahren von Online-Shopping",a:"Beim Online-Shopping besteht die Gefahr von Datenmissbrauch oder Betrug. Außerdem kann man Produkte nicht anfassen oder anprobieren, was zu Enttäuschungen führen kann.",vocab:[["der Datenmissbrauch","data misuse"],["der Betrug","fraud"],["anprobieren","to try on"],["die Enttäuschung","disappointment"],["unsicher","insecure/unsafe"]]},
   {theme:"Online-Shopping",type:"question",q:"Welche eigenen Erfahrungen haben Sie mit Online-Shopping gemacht?",a:"Ich kaufe oft Bücher und Kleidung online. Einmal habe ich eine falsche Größe bestellt und musste das Paket umtauschen. Es hat insgesamt zwei Wochen gedauert.",vocab:[["bestellen","to order"],["umtauschen","to exchange"],["die Größe","size"],["das Paket","package"],["die Rückgabe","return"]]},
   {theme:"WG-Leben",type:"topic",q:"Wer lebt in WGs und warum?",a:"Vor allem Studierende und junge Berufstätige leben in WGs, weil sie so die hohen Mietkosten teilen können und gleichzeitig nicht allein sind.",vocab:[["die WG","shared apartment"],["teilen","to share"],["die Mietkosten","rental costs"],["die Gemeinschaft","community"],["berufstätig","working/employed"]]},
-  {theme:"WG-Leben",type:"topic",q:"Vorteile und Nachteile des WG-Lebens",a:"Ein großer Vorteil ist die Kostenersparnis und der soziale Kontakt. Nachteilig kann es sein, wenn man unterschiedliche Ordnungsvorstellungen oder Schlafzeiten hat.",vocab:[["die Kostenersparnis","cost savings"],["die Ordnungsvorstellungen","ideas about tidiness"],["der Kompromiss","compromise"],["rücksichtsvoll","considerate"],["selbstständig","independent"]]},
+  {theme:"WG-Leben",type:"topic",q:"Vorteile und Nachteile des WG-Lebens",a:"Ein großer Vorteil ist die Kostenersparnis und der soziale Kontakt. Nachteilig kann es sein, wenn man unterschiedliche Ordnungsvorstellungen oder Schlafzeiten hat.",vocab:[["die Kostenersparnis","cost savings"],["die Ordnungsvorstellung","idea about tidiness"],["der Kompromiss","compromise"],["rücksichtsvoll","considerate"],["selbstständig","independent"]]},
   {theme:"WG-Leben",type:"topic",q:"Streit und Konflikte in WGs",a:"Häufige Konflikte entstehen beim Putzen oder wenn jemand zu viel Lärm macht. Es ist wichtig, direkt miteinander zu sprechen, anstatt Probleme zu ignorieren.",vocab:[["der Konflikt","conflict"],["entstehen","to arise"],["der Lärm","noise"],["direkt ansprechen","to address directly"],["ignorieren","to ignore"]]},
   {theme:"WG-Leben",type:"topic",q:"Regeln in WGs",a:"Klare Regeln helfen, Konflikte zu vermeiden. Zum Beispiel: ein Putzplan, feste Zeiten für Ruhe und eine Regelung für Besuch.",vocab:[["der Putzplan","cleaning schedule"],["die Regelung","rule/arrangement"],["feste Zeiten","fixed times"],["die Ruhezeit","quiet time"],["verbindlich","binding/obligatory"]]},
-  {theme:"Schule & Lernen",type:"topic",q:"Schule früher und heute",a:"Früher war der Unterricht sehr lehrerorientiert und es gab kaum Mitbestimmung für Schüler. Heute gibt es viel mehr interaktive Methoden und digitale Hilfsmittel.",vocab:[["lehrerorientiert","teacher-centred"],["die Mitbestimmung","participation/co-determination"],["das Hilfsmittel","tool/aid"],["interaktiv","interactive"],["der Unterricht","lessons/teaching"]]},
+  {theme:"Schule & Lernen",type:"topic",q:"Schule früher und heute",a:"Früher war der Unterricht sehr lehrerorientiert und es gab kaum Mitbestimmung für Schüler. Heute gibt es viel mehr interaktive Methoden und digitale Hilfsmittel.",vocab:[["lehrerorientiert","teacher-centred"],["die Mitbestimmung","participation"],["das Hilfsmittel","tool/aid"],["interaktiv","interactive"],["der Unterricht","lessons/teaching"]]},
   {theme:"Schule & Lernen",type:"topic",q:"Schulsystem in meiner Heimat: Vorteile und Nachteile",a:"Das Schulsystem in meiner Heimat legt viel Wert auf Disziplin und Leistung. Das bereitet gut auf Prüfungen vor, aber kreatives Denken kommt oft zu kurz.",vocab:[["die Disziplin","discipline"],["die Leistung","performance"],["kreatives Denken","creative thinking"],["zu kurz kommen","to be neglected"],["das Bildungssystem","education system"]]},
   {theme:"Schule & Lernen",type:"question",q:"Welche Erfahrungen haben Sie aus Ihrer Schulzeit?",a:"Ich erinnere mich noch gut an meinen Biologielehrer, der immer spannende Experimente gemacht hat. Dadurch habe ich gelernt, dass Lernen auch Spaß machen kann.",vocab:[["sich erinnern an","to remember"],["das Experiment","experiment"],["spannend","exciting"],["der Einfluss","influence"],["prägen","to shape/influence"]]},
   {theme:"Schule & Lernen",type:"topic",q:"Lernen in der Kindheit vs. Lernen als Erwachsene/r",a:"Als Kind lernt man spielerisch und fast unbewusst. Als Erwachsener muss man sich mehr anstrengen und aktiv Strategien einsetzen, aber man versteht Inhalte auch tiefer.",vocab:[["spielerisch","playfully"],["unbewusst","unconsciously"],["sich anstrengen","to make an effort"],["die Strategie","strategy"],["tief verstehen","to understand deeply"]]},
@@ -176,15 +291,11 @@ function shuffle(arr){
   return a;
 }
 
-let queue=[];
-let seen=0;
-let total=0;
-let isFlipped=false;
+let queue=[],total=0,isFlipped=false;
 
 function startDeck(){
-  queue=shuffle(CARDS).map((c,i)=>({...c,idx:i,due:i}));
+  queue=shuffle(CARDS);
   total=queue.length;
-  seen=0;
   showScreen('card-screen');
   showNextCard();
 }
@@ -192,50 +303,43 @@ function startDeck(){
 function showNextCard(){
   if(queue.length===0){
     showScreen('done-screen');
-    document.getElementById('done-sub').textContent='You went through all '+total+' cards. Keep reviewing to build long-term memory.';
+    document.getElementById('done-sub').textContent='Du hast alle '+total+' Karten durchgearbeitet. Wiederhole regelmäßig, um es langfristig zu behalten.';
     return;
   }
-  const card=queue[0];
-  seen++;
+  const c=queue[0];
   isFlipped=false;
   document.getElementById('card').classList.remove('flipped');
   document.getElementById('rating-row').style.display='none';
-  document.getElementById('theme-label').textContent=card.theme;
-  document.getElementById('card-type').textContent=card.type==='question'?'Question':'Topic';
-  document.getElementById('card-question').textContent=card.q;
-  document.getElementById('card-answer').textContent=card.a;
+  document.getElementById('card-container').scrollTop=0;
+  document.getElementById('theme-label').textContent=c.theme;
+  const badge=document.getElementById('type-badge');
+  badge.textContent=c.type==='question'?'Frage':'Thema';
+  badge.className='type-badge '+(c.type==='question'?'type-question':'type-topic');
+  document.getElementById('card-question').textContent=c.q;
+  document.getElementById('card-answer').textContent=c.a;
   const vl=document.getElementById('card-vocab');
   vl.innerHTML='';
-  card.vocab.forEach(v=>{
+  c.vocab.forEach(v=>{
     const d=document.createElement('div');
     d.className='vocab-item';
-    d.innerHTML='<span class="vocab-de">'+v[0]+'</span> <span class="vocab-en">– '+v[1]+'</span>';
+    d.innerHTML='<span class="vocab-de">'+v[0]+'</span><span class="vocab-en">– '+v[1]+'</span>';
     vl.appendChild(d);
   });
-  const prog=Math.round(((total-queue.length)/total)*100);
-  document.getElementById('progress-fill').style.width=prog+'%';
-  document.getElementById('counter-text').textContent=(total-queue.length+1)+' / '+total;
-  document.getElementById('queue-text').textContent=queue.length+' left';
+  document.getElementById('progress-fill').style.width=Math.round(((total-queue.length)/total)*100)+'%';
+  document.getElementById('queue-pill').textContent=(total-queue.length+1)+' / '+total;
 }
 
 function flipCard(){
   if(isFlipped) return;
   isFlipped=true;
   document.getElementById('card').classList.add('flipped');
-  setTimeout(()=>{
-    document.getElementById('rating-row').style.display='grid';
-  },250);
+  setTimeout(()=>{document.getElementById('rating-row').style.display='grid';},260);
 }
 
-function rate(difficulty){
-  const card=queue.shift();
-  if(difficulty==='hard'){
-    const pos=Math.min(3,queue.length);
-    queue.splice(pos,0,card);
-  } else if(difficulty==='medium'){
-    const pos=Math.min(10,queue.length);
-    queue.splice(pos,0,card);
-  }
+function rate(d){
+  const c=queue.shift();
+  if(d==='hard') queue.splice(Math.min(3,queue.length),0,c);
+  else if(d==='medium') queue.splice(Math.min(10,queue.length),0,c);
   showNextCard();
 }
 
@@ -244,9 +348,9 @@ function showScreen(id){
   document.getElementById(id).classList.add('active');
 }
 
-function restartDeck(){
-  showScreen('menu-screen');
-}
+function restartDeck(){ showScreen('menu-screen'); }
 
-document.getElementById('deck-count').textContent=CARDS.length+' cards · spaced repetition';
+document.getElementById('deck-chip').textContent=CARDS.length+' Karten · Spaced Repetition';
 </script>
+</body>
+</html>
