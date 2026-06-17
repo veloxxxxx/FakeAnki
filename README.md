@@ -1,2 +1,2 @@
 ### FakeAnki 
-Link: xxx
+Link: https://veloxxxxx.github.io/FakeAnki/
