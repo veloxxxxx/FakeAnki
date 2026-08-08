@@ -84,6 +84,13 @@ body{
 /* ---- card screen ---- */
 #card-screen{gap:0}
 .topbar{display:flex;align-items:center;gap:12px;margin-bottom:1rem}
+.back-btn{
+  flex:0 0 auto;background:transparent;color:var(--turq-ink);
+  border:1.5px solid var(--turq);border-radius:999px;
+  padding:6px 14px;font-size:13px;font-weight:600;font-family:inherit;
+  cursor:pointer;transition:background .15s;
+}
+.back-btn:active{background:var(--turq-soft)}
 .progress-track{flex:1;height:6px;background:var(--surface-2);border-radius:999px;overflow:hidden}
 .progress-fill{height:100%;width:0%;border-radius:999px;
   background:linear-gradient(90deg,var(--pink),var(--turq));transition:width .35s ease}
@@ -175,6 +182,7 @@ body{
   </div>
   <div id="card-screen" class="screen">
     <div class="topbar">
+      <button class="back-btn" onclick="goBack()">Zurück</button>
       <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
       <span class="queue-pill" id="queue-pill"></span>
     </div>
@@ -1406,7 +1414,7 @@ function shuffle(arr){
   }
   return a;
 }
-let queue=[],total=0,isFlipped=false;
+let queue=[],total=0,isFlipped=false,backScreen='menu-screen';
 function renderMenu(){
   const list=document.getElementById('deck-list');
   list.innerHTML='';
@@ -1422,6 +1430,7 @@ function renderMenu(){
   });
 }
 function startDeck(i){
+  backScreen='menu-screen';
   startCards(DECKS[i].cards);
 }
 function startCards(cards){
@@ -1443,7 +1452,7 @@ function openChapters(i){
     b.innerHTML='<span class="deck-play">▶</span>'+
       '<span class="deck-info"><span class="deck-name">'+theme+'</span>'+
       '<span class="deck-meta" style="display:block">'+groups[theme].length+' Karten</span></span>';
-    b.onclick=()=>startCards(groups[theme]);
+    b.onclick=()=>{backScreen='chapter-screen';startCards(groups[theme]);};
     list.appendChild(b);
   });
   showScreen('chapter-screen');
@@ -1503,6 +1512,7 @@ function showScreen(id){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
 }
+function goBack(){ showScreen(backScreen); }
 function restartDeck(){ showScreen('menu-screen'); }
 renderMenu();
 </script>
